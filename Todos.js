@@ -13,6 +13,10 @@ function Todos () {
     const inputChanged = (event) => {
         setDesc({...desc, [event.target.name]: event.target.value})
     }
+
+    const deleteTodo = (row) => {
+       setTodos(todos.filter((desc, index) => index !== row))
+    }
     
     return (
         <div>
@@ -27,6 +31,7 @@ function Todos () {
                         <tr key= {index}>
                             <td>{todo.description}</td>
                             <td>{todo.date}</td>
+                            <td><button onClick ={() => deleteTodo(index)}>Delete</button></td>
                             </tr>
                             )
                     }
