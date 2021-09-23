@@ -1,0 +1,50 @@
+import React,{useState} from 'react';
+import { AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
+
+function Todos () {
+
+    const [desc, setDesc] = useState({description: '', date: '', priority: ''});
+    const [todos, setTodos] = useState([]);
+
+    const addTodos = (event) => {
+        event.preventDefault();
+        setTodos ([...todos, desc])
+    }
+
+    const inputChanged = (event) => {
+        setDesc({...desc, [event.target.name]: event.target.value})
+    }
+
+    const deleteTodo = (row) => {
+       setTodos(todos.filter((desc, index) => index !== row))
+    }
+   
+    const columns = [
+        {field : 'description', sortable: true, filter: true, floatingFilter: true},
+        {field: 'date', sortable: true, filter: true, floatingFilter: true},
+        {field: 'priority', sortable: true, filter: true, floatingFilter: true,
+        cellStyle: params => params.value === "High" ? {color: "red"} : {color: "black"}}
+    ]
+
+    return (
+        <div>
+            <input placeholder="Date" type='Date' name='date' value={desc.date} onChange={inputChanged}/>
+           <input placeholder="Description" type='text' name='description' value={desc.description} onChange={inputChanged}/>
+           <input placeholder="priority" type='text' name='priority' value={desc.priority} onChange={inputChanged}/>
+
+           <button onClick={addTodos}>Add</button>
+           <div className="ag-theme-material" style={{height: 500, width: 600, margin: 'auto'}}>
+            <AgGridReact 
+            animateRows={true}
+            rowData={todos}
+            columnDefs={columns}
+            />
+           </div>
+            
+        </div>
+    )
+}
+export default Todos;
