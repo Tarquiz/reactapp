@@ -1,0 +1,8 @@
+function Home () {
+    return(
+        <div>
+            <p>tämä on home sivu</p>
+        </div>
+    );
+}
+export default Home
